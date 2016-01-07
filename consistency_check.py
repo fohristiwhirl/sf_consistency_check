@@ -5,7 +5,7 @@ account = "EXB123456"
 venue = "TESTEX"
 symbol = "FOOBAR"
 
-sf.change_api_key("0ecd3a6bfb029a96b22393d43f113fcf2cc5d3cb")      # <----------------------- FIX THIS
+sf.change_api_key("yourkeyhere")      # <----------------------- FIX THIS
 
 while 1:
 
