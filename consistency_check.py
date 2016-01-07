@@ -1,56 +1,52 @@
 import time
 import stockfighter_minimal as sf
 
-INFO = sf.Order()
+account = "EXB123456"
+venue = "TESTEX"
+symbol = "FOOBAR"
 
-INFO.account = "EXB123456"
-INFO.venue = "TESTEX"
-INFO.symbol = "FOOBAR"
-
-sf.change_api_key("YOUR API KEY HERE")      # <----------------------- FIX THIS
+sf.change_api_key("0ecd3a6bfb029a96b22393d43f113fcf2cc5d3cb")      # <----------------------- FIX THIS
 
 while 1:
 
     print("Clearing the book... (2 orders)")
-    INFO.qty = 999999
-    INFO.orderType = "market"
-    INFO.price = 1
-    INFO.direction = "buy"
-    r = sf.execute(INFO)
+    
+    o = {"account": account, "venue": venue, "stock": symbol, "qty": 999999, "orderType": "market", "price": 1, "direction": "buy"}
+    r = sf.execute_d(o)
     print("Last ID was {}".format(r["id"]))
-    INFO.direction = "sell"
-    r = sf.execute(INFO)
+    
+    o = {"account": account, "venue": venue, "stock": symbol, "qty": 999999, "orderType": "market", "price": 1, "direction": "sell"}
+    r = sf.execute_d(o)
     print("Last ID was {}".format(r["id"]))
     
     print("Placing limit order...")
-    INFO.orderType = "limit"
-    INFO.price = 5000
-    INFO.qty = 50
-    INFO.direction = "sell"
-    r = sf.execute(INFO)
+
+    o = {"account": account, "venue": venue, "stock": symbol, "qty": 50, "orderType": "limit", "price": 5000, "direction": "sell"}
+    r = sf.execute_d(o)
     print("Last ID was {}".format(r["id"]))
     
     print("Buying 40 of it back...", end = "")
-    INFO.qty = 40
-    INFO.direction = "buy"
-    r = sf.execute(INFO)
+
+    o = {"account": account, "venue": venue, "stock": symbol, "qty": 40, "orderType": "limit", "price": 5000, "direction": "buy"}
+    r = sf.execute_d(o)
     print(r["fills"])
     print("Last ID was {}".format(r["id"]))
     
     print("Buying final 10 with market...", end = "")
-    INFO.qty = 10
-    INFO.direction = "buy"
-    INFO.orderType = "market"
-    r = sf.execute(INFO)
+
+    o = {"account": account, "venue": venue, "stock": symbol, "qty": 10, "orderType": "market", "price": 5000, "direction": "buy"}
+    r = sf.execute_d(o)
     print(r["fills"])
     print("Last ID was {}".format(r["id"]))
-    q = sf.quote(INFO.venue, INFO.symbol)
+
+    q = sf.quote(venue, symbol)
     ls = q["lastSize"]
-    print("Last size was {}".format(ls), end = "")
+    print("Quote: lastSize was {}".format(ls), end = "")
+    
     if ls != 10:
-        print("   <---------------------------------------")
+        print("   <---------------------------------------------------------")
         time.sleep(5)
-        q = sf.quote(INFO.venue, INFO.symbol)
+        q = sf.quote(venue, symbol)
         print("After 5 seconds: Last size was {}".format(q["lastSize"]))
     else:
         print()
