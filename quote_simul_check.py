@@ -8,6 +8,8 @@ order.account = "EXB123456"
 order.venue = "TESTEX"
 order.symbol = "FOOBAR"
 
+print("Reported last trade: (should be 96 @ 360, but sometimes is 5 @ 237)")
+
 while 1:
 
 	# Clear the book.......................
